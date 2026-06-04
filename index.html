@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="google-site-verification" content="aYRjXPGLN5_HBcVn5MymRrMhY1WtLBW2G58BwKVCzFw" />
+    <title>Govt. Associate College Renala Khurd - Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* --- GLOBAL VISUALS & THEME VARIABLES --- */
+        :root {
+            --primary-accent: #1e40af;
+            --base-slate-text: #1e293b;
+            --accent-highlights: #059669;
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--base-slate-text);
+            display: flex;
+            border: 16px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* --- LAYOUT CONSTRAINTS --- */
+        #portal-wrapper {
+            width: 100%;
+            max-width: 450px;
+            margin: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3);
+            padding: 20px;
+            display: none;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- TYPOGRAPHY GRID --- */
+        .serif-heading {
+            font-family: 'Inter', sans-serif;
+            color: var(--primary-accent);
+            text-align: center;
+        }
+
+        /* --- PURE CSS WELCOME LOADER --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader-title {
+            font-size: 1.8rem;
+            font-family: 'Footlight MT';
+            font-style: italic;
+            margin-bottom: 12px;
+            animation: pulseOpacity 1.5s infinite ease-in-out;
+        }
+
+        .dots-container {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-accent);
+            height: 30px;
+        }
+
+        @keyframes pulseOpacity {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- MAIN MENU CARDS --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .menu-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            border-bottom: 4px solid var(--primary-accent);
+            border-color: var(--primary-accent);
+        }
+
+        .menu-card h3 {
+            color: var(--primary-accent);
+            font-size: 1.2rem;
+        }
+
+        .menu-card p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-accent);
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            transition: transform 0.2s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-4px);
+        }
+
+        /* --- FORM MECHANICS & STEPS --- */
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            background: skyblue;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .step-indicator span.active {
+            color: var(--primary-accent);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--base-slate-text);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-accent);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .action-btn {
+            background: var(--primary-accent);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.9rem;
+        }
+
+        .matrix-table th, .matrix-table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .matrix-table th {
+            background: var(--primary-accent);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .matrix-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .contact-highlight {
+            color: var(--accent-highlights);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* ==========================================================================
+           🎨 PICTURE INSPIRED NEW SLIP STRUCTURE STYLE ENGINE
+           ========================================================================== */
+        #slip-capture-zone {
+            padding: 0px;
+            background: #ffffff;
+        }
+
+        .slip-card {
+            border: 3px solid #0b4596;
+            outline: 1px solid #0b4596;
+            outline-offset: -6px;
+            padding: 20px;
+            background: #ffffff;
+            position: relative;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        .slip-header {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .slip-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0b4596;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .slip-header .sub-loc {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 4px;
+        }
+
+        .slip-header .session-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+        }
+
+        .slip-divider {
+            border-top: 1.5px solid #0b4596;
+            margin: 10px 0 15px 0;
+        }
+
+        /* Mid section with photo and roll no badge */
+        .slip-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .roll-badge {
+            background-color: #0b4596;
+            color: #ffffff;
+            padding: 6px 14px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
+        .slip-image-container {
+            border: 1.5px solid #0b4596;
+            border-radius: 6px;
+            padding: 2px;
+            background: white;
+        }
+
+        .slip-preview-img {
+            width: 85px;
+            height: 105px;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+        }
+
+        /* Custom Structured Table Grid */
+        .slip-table-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .slip-table-matrix td {
+            border: 1px solid #cbd5e1;
+            padding: 8px 12px;
+            font-size: 0.88rem;
+        }
+
+        .slip-table-matrix td.label-cell {
+            width: 38%;
+            font-weight: 700;
+            color: #0b4596;
+        }
+
+        .slip-table-matrix td.value-cell {
+            width: 62%;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        /* Footers & Signatures */
+        .slip-footer-instructions {
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 10px;
+            font-size: 0.68rem;
+            color: #64748b;
+            line-height: 1.4;
+            margin-bottom: 35px;
+        }
+
+        .sig-container {
+            display: flex;
+            justify-content: flex-end;
+            text-align: center;
+        }
+
+        .sig-line {
+            width: 140px;
+            border-top: 1px solid #000000;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #000000;
+            padding-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <h1 class="serif-heading loader-title">Welcome to College Portal</h1>
+        <div class="dots-container" id="loading-dots">.</div>
+    </div>
+
+    <div id="portal-wrapper">
+        
+        <div id="section-home">
+             <h1 class="serif-heading" style="font-size: 2.1rem; color: white; background-color: var(--primary-accent); padding: 10px; border: 2px solid var(--primary-accent); border-radius: 8px; font-style: italic; font-weight: bold; margin-bottom: 8px;">Govt. Associate College Renala Khurd</h1>
+            <p style="text-align: center; font-size: 0.9rem; color: #64748b; margin-bottom: 24px;">Admission & Information Portal</p>
+            
+            <div class="menu-grid">
+                <div class="menu-card" onclick="switchSection('section-admission')">
+                    <h3><span style="font-size: 2rem; margin-right: 8px;">📝</span>Online Admission</h3>
+                    <p>Apply for new sessions and generate your verification slip matrix.</p>
+                </div>
+                <div class="menu-card" onclick="switchSection('section-about')">
+                    <h3><span style="font-size: 2rem; margin-right: 8px;">🏛️</span>About College</h3>
+                    <p>View academic faculty structures and operational departments.</p>
+                </div>
+                <div class="menu-card" onclick="switchSection('section-contact')">
+                    <h3><span style="font-size: 2rem; margin-right: 8px;">📞</span>Contact Support</h3>
+                    <p>Get in touch with the support system and administration keys.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-admission" class="hidden">
+            <div class="back-btn" onclick="navigateToHome()">&larr; Back to Main Menu</div>
+            <h2 class="serif-heading" style="font-size: 1.6rem; margin-bottom: 16px;">Admission Execution</h2>
+            
+            <div class="step-indicator">
+                <span id="ind-step1" class="active">1. Personal</span>
+                <span id="ind-step2">2. Address</span>
+                <span id="ind-step3">3. Academic</span>
+            </div>
+
+            <form id="admissionForm" onsubmit="event.preventDefault();">
+                
+                <div id="form-step-1">
+                    <div class="form-group">
+                        <label>Student Passport Picture</label>
+                        <input type="file" id="student_photo" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <input type="text" id="student_name" required placeholder="Enter Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Father's Name</label>
+                        <input type="text" id="father_name" required placeholder="Enter Your Father Name">
+                    </div>
+                    <div class="form-group">
+                        <label>CNIC / B-Form Number</label>
+                        <input type="text" id="student_cnic" placeholder="XXXXX-XXXXXXX-X" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" id="student_dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="student_gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Mother's Name</label>
+                        <input type="text" id="mother_name" required placeholder="Enter Your Mother Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Religion</label>
+                        <input type="text" id="religion" required placeholder="Enter Your Religion">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Mobile Number</label>
+                        <input type="tel" id="contact_phone" required placeholder="03XXXXXXXXX">
+                    </div>
+                    <div class="btn-container">
+                        <button type="button" class="action-btn" onclick="savePersonal()">Next Step &rarr;</button>
+                    </div>
+                </div>
+
+                <div id="form-step-2" class="hidden">
+                    <div class="form-group">
+                        <label>Country</label>
+                        <select id="addr_country" required>
+                            <option value="">Select Country</option>
+                            <option value="Pakistan">Pakistan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Province</label>
+                        <select id="addr_province" required>
+                            <option value="">Select Province</option>
+                            <option value="Punjab">Punjab</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>District</label>
+                        <select id="addr_district" required>
+                            <option value="">Select District</option>
+                            <option value="Okara">Okara</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tehsil</label>
+                        <select id="addr_tehsil" required>
+                            <option value="">Select Tehsil</option>
+                            <option value="Renala Khurd">Renala Khurd</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Permanent Residential Address</label>
+                        <input type="text" id="addr_permanent" required placeholder="Street, Mohallah or Village details">
+                    </div>
+                    <div class="form-group">
+                        <label>Temporary Mailing Address</label>
+                        <input type="text" id="addr_temporary" required placeholder="Enter Temporary Address">
+                    </div>
+                    <div class="btn-container" style="gap: 10px;">
+                        <button type="button" class="action-btn" style="background:#64748b;" onclick="backToStep(1)">&larr; Back</button>
+                        <button type="button" class="action-btn" onclick="saveAddress()">Next Step &rarr;</button>
+                    </div>
+                </div>
+
+                <div id="form-step-3" class="hidden">
+                    <div class="form-group">
+                        <label>Previous Attended Institute</label>
+                        <input type="text" id="prev_institute" required placeholder="School/College Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Target Applied Class</label>
+                        <select id="applied_class" required>
+                            <option value="">Select Target Faculty</option>
+                            <option value="FSc Pre-Medical">FSc Pre-Medical</option>
+                            <option value="FSc Pre-Engineering">FSc Pre-Engineering</option>
+                            <option value="ICS (Physics/Stats)">ICS (Computer Science)</option>
+                            <option value="I.Com">I.Com</option>
+                            <option value="FA (Arts)">FA (Arts)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Marks (Standard Metric)</label>
+                        <input type="number" id="total_marks" value="1200" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Obtained Marks</label>
+                        <input type="number" id="obtained_marks" required placeholder="Enter score">
+                    </div>
+                    <div class="btn-container" style="gap: 10px;">
+                        <button type="button" class="action-btn" style="background:#64748b;" onclick="backToStep(2)">&larr; Back</button>
+                        <button type="button" class="action-btn" style="background:var(--accent-highlights);" onclick="evaluateAcademicGatekeeper()">Compile & Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="section-slip" class="hidden">
+            
+            <div id="slip-capture-zone">
+                <div class="slip-card">
+                    <div class="slip-header">
+                        <h2>Govt. Associate College</h2>
+                        <div class="sub-loc">RENALA KHURD (OKARA)</div>
+                        <div class="session-title">Admission Slip - Session 2026-28</div>
+                    </div>
+                    
+                    <div class="slip-divider"></div>
+                    
+                    <div class="slip-meta-row">
+                        <div class="roll-badge" id="dynamic-roll-id">ROLL NO: GCRK-2026-131083</div>
+                        <div class="slip-image-container">
+                            <img id="slip-img-placeholder" class="slip-preview-img" src="" alt="Profile Image">
+                        </div>
+                    </div>
+                    
+                    <table class="slip-table-matrix">
+                        <tbody id="slip-table-body">
+                            </tbody>
+                    </table>
+                    
+                    <div class="slip-footer-instructions">
+                        * Please bring this slip and original CNIC/B-Form on Entry Test day.<br>
+                        * Reporting Time: 08:30 AM
+                    </div>
+                    
+                    <div class="sig-container">
+                        <div class="sig-line">Principal Signature</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-container" style="margin-top:20px;">
+                <button type="button" class="action-btn" onclick="executeRasterizationEngine()">Download Official PNG</button>
+            </div>
+        </div>
+
+        <div id="section-about" class="hidden">
+            <div class="back-btn" onclick="navigateToHome()">&larr; Back to Main Menu</div>
+            <h2 class="serif-heading" style="font-size: 1.6rem; margin-bottom: 12px;">Faculty Profile Matrix</h2>
+            <p style="font-size:0.85rem; margin-bottom:16px; color:#64748b;">Academic operational structures of Govt. Associate College Renala Khurd.</p>
+            
+            <table class="matrix-table">
+               <tr><th>Institute</th><td>Govt Associate College For Boys, Renala Khurd</td></tr>
+                    <tr><th>Principal</th><td>Prof. Rao Akhtar Ali Khan</td></tr>
+                    <tr><th><p>Voice Principal</th><td> Prof. Zulfiqar Ali shaz </p></td></tr>
+                    <tr><th><p>Urdu Department</th><td> Prof. Zulfiqar Ali shaz &  Prof. Mian Iftkhar Ahmad & Prof. Adullah  </p></td></tr>
+                    <tr><th><p>English Department</th><td> Prof. Mazhar ul Ameen,  Prof. Ch Zulfiqar,  Prof. Azib azeem,  Prof. Mr Rizwan </p></th></tr>
+                    <tr><th><p>Islamic Study Department</th><td> Prof. Doctor Jawad Haider,  Prof. Mian Usman Ahmad  </p></th></tr>
+                    <tr><th><p>Education Department</th><td>Lecturer Abida</p></th></tr>
+                    <tr><th><p>Social Work Department</th><td>Prof. Khalid Saafullah</p></th></tr>
+                    <tr><th><p>Physology Department</th><td>Prof. Adullah Qureshi</p></th></tr>
+                    <tr><th><p>Health & physical Education Department</th><td>Prof. Moazum Ali</p></th></tr>    
+                    <tr><th><p>Statistic Department</th><td>Prof. Adullah , Prof. Fiaz Bashir</p></th></tr>
+                    <tr><th><p>Library Science Department</th><td>Prof. Asghar Fazi</p></th></tr> 
+                    <tr><th><p>Mathematics Department</th><td>Prof.Doctor Adullah</p></th></tr>
+                    <tr><th><p>Physics Department</th><td>Prof. Adeel Akhtar</p></th></tr>
+                    <tr><th><p>Chemistry Department</th><td>Prof. Suleman</p></th></tr>
+                    <tr><th><p>Biology Department</th><td>Prof. Jahnzaib Ijaz</p></th></tr>
+                    <tr><th><p>Botany Department</p></th><td>Prof. Doctor Adul Razaq</p></th></tr>
+                    <tr><th><p>Mathematics Department</p></th><td>Prof.Doctor Adullah</p></th></tr>
+                    <tr><th><p>Staff</th><td>All faculty in Arts / Science Departments</p></th></tr>
+                    <tr><th>Capacity</th><td>300 Students</td></tr>
+                    <tr><th>Developer</th><td>Mr. Muneeb Ch</td></tr>          
+            </table>
+        </div>
+
+        <div id="section-contact" class="hidden">
+            <div class="back-btn" onclick="navigateToHome()">&larr; Back to Main Menu</div>
+            <h2 class="serif-heading" style="font-size: 1.6rem; margin-bottom: 12px;">Support Credentials</h2>
+            
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>Channel Marker</th>
+                        <th>Inline Target Point</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WhatsApp Support</td>
+                        <td><a href="https://wa.me/923000000000" class="contact-highlight" target="_blank">+92 300 0000000</a></td>
+                    </tr>
+                    <tr>
+                        <td>Admin Email</td>
+                        <td><a href="mailto:muneebijaz350@gmail.com" class="contact-highlight">muneebijaz350@gmail.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Office Location</td>
+                        <td>Opposite to LBD Canal near 5,1 R.A , Renala Khurd</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        let userData = {};
+        let temporaryImageStreamUrl = "";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let dotsCount = 1;
+            const dotsElement = document.getElementById("loading-dots");
+            
+            const dotsInterval = setInterval(() => {
+                dotsCount = (dotsCount % 3) + 1;
+                dotsElement.textContent = ".".repeat(dotsCount);
+            }, 333);
+
+            setTimeout(() => {
+                clearInterval(dotsInterval);
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("portal-wrapper").style.display = "block";
+            }, 3000);
+        });
+
+        function switchSection(targetSectionId) {
+            document.getElementById("section-home").classList.add("hidden");
+            document.getElementById("section-admission").classList.add("hidden");
+            document.getElementById("section-about").classList.add("hidden");
+            document.getElementById("section-contact").classList.add("hidden");
+            document.getElementById("section-slip").classList.add("hidden");
+
+            document.getElementById(targetSectionId).classList.remove("hidden");
+        }
+
+        function navigateToHome() {
+            switchSection("section-home");
+        }
+
+        function backToStep(stepNumber) {
+            document.getElementById("form-step-1").classList.add("hidden");
+            document.getElementById("form-step-2").classList.add("hidden");
+            document.getElementById("form-step-3").classList.add("hidden");
+            
+            document.getElementById(`form-step-${stepNumber}`).classList.remove("hidden");
+
+            document.getElementById("ind-step1").classList.remove("active");
+            document.getElementById("ind-step2").classList.remove("active");
+            document.getElementById("ind-step3").classList.remove("active");
+            
+            for(let i=1; i<=stepNumber; i++) {
+                document.getElementById(`ind-step${i}`).classList.add("active");
+            }
+        }
+
+        function savePersonal() {
+            const fileInput = document.getElementById("student_photo");
+            const name = document.getElementById("student_name").value.trim();
+            const fName = document.getElementById("father_name").value.trim();
+            const cnic = document.getElementById("student_cnic").value.trim();
+            const dob = document.getElementById("student_dob").value;
+            const gender = document.getElementById("student_gender").value;
+            const mName = document.getElementById("mother_name").value.trim();
+            const religion = document.getElementById("religion").value.trim();
+            const phone = document.getElementById("contact_phone").value.trim();
+
+            if(!fileInput.files[0] || !name || !fName || !cnic || !dob || !gender || !mName || !religion || !phone) {
+                alert("Please fill all fields in Step 1 and upload profile picture.");
+                return;
+            }
+
+            temporaryImageStreamUrl = URL.createObjectURL(fileInput.files[0]);
+
+            userData.studentName = name;
+            userData.fatherName = fName;
+            userData.cnic = cnic;
+            userData.dob = dob;
+            userData.gender = gender;
+            userData.motherName = mName;
+            userData.religion = religion;
+            userData.phone = phone;
+
+            document.getElementById("form-step-1").classList.add("hidden");
+            document.getElementById("form-step-2").classList.remove("hidden");
+            document.getElementById("ind-step2").classList.add("active");
+        }
+
+        function saveAddress() {
+            const country = document.getElementById("addr_country").value;
+            const province = document.getElementById("addr_province").value;
+            const district = document.getElementById("addr_district").value;
+            const tehsil = document.getElementById("addr_tehsil").value;
+            const permAddr = document.getElementById("addr_permanent").value.trim();
+            const tempAddr = document.getElementById("addr_temporary").value.trim();
+
+            if(!country || !province || !district || !tehsil || !permAddr || !tempAddr) {
+                alert("Please select all location parameters and fill address fields.");
+                return;
+            }
+
+            userData.country = country;
+            userData.province = province;
+            userData.district = district;
+            userData.tehsil = tehsil;
+            userData.permanentAddress = permAddr;
+            userData.temporaryAddress = tempAddr;
+
+            document.getElementById("form-step-2").classList.add("hidden");
+            document.getElementById("form-step-3").classList.remove("hidden");
+            document.getElementById("ind-step3").classList.add("active");
+        }
+
+        function evaluateAcademicGatekeeper() {
+            const prevInst = document.getElementById("prev_institute").value.trim();
+            const targetClass = document.getElementById("applied_class").value;
+            const totalM = parseFloat(document.getElementById("total_marks").value);
+            const obtM = parseFloat(document.getElementById("obtained_marks").value);
+
+            if(!prevInst || !targetClass || isNaN(obtM)) {
+                alert("Academic matrix configuration parameter missing.");
+                return;
+            }
+
+            const passagePercentage = (obtM / totalM) * 100;
+            if(passagePercentage < 33.0) {
+                alert("Submission Chain Blocked: Obtained marks are below the required threshold of 33% criteria.");
+                return;
+            }
+
+            userData.previousInstitute = prevInst;
+            userData.appliedClass = targetClass;
+            userData.totalMarks = totalM;
+            userData.obtainedMarks = obtM;
+            userData.percentage = passagePercentage.toFixed(2) + "%";
+
+            dispatchDataToAdmin();
+            generateFinalForm();
+        }
+
+        function dispatchDataToAdmin() {
+           const endpoint = "https://formspree.io/f/xbdejwdy";
+            
+            const payload = {
+                "SECURITY_MARKER": "GOVT ASSOCIATE COLLEGE RENALA KHURD ADMISSION PORTAL DATA",
+                "Student Name": userData.studentName.toUpperCase(),
+                "Father Name": userData.fatherName.toUpperCase(),
+                "CNIC": userData.cnic,
+                "DOB": userData.dob,
+                "Gender": userData.gender,
+                "Mother Name": userData.motherName,
+                "Religion": userData.religion,
+                "Phone": userData.phone,
+                "Tehsil Address": `${userData.permanentAddress}, ${userData.tehsil}, ${userData.district}`,
+                "Applied Class Area": userData.appliedClass,
+                "Marks Matrix": `${userData.obtainedMarks} / ${userData.totalMarks} (${userData.percentage})`,
+                "Previous School": userData.previousInstitute
+            };
+
+            fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                console.log("Transmission node pipeline updated safely.");
+            })
+            .catch(error => {
+                console.error("System background link bypassed.");
+            });
+        }
+
+        /* ==========================================================================
+           ⚡ UPDATED JAVASCRIPT TABLE INJECTION TO MATCH THE IMAGE STRUCTURE
+           ========================================================================== */
+        function generateFinalForm() {
+            switchSection("section-slip");
+            
+            document.getElementById("slip-img-placeholder").src = temporaryImageStreamUrl;
+
+            // Generating a random unique roll number just like the image template
+            const randomRollDigits = Math.floor(100000 + Math.random() * 900000);
+            document.getElementById("dynamic-roll-id").textContent = `ROLL NO: GCRK-2026-${randomRollDigits}`;
+
+            const tableBody = document.getElementById("slip-table-body");
+            tableBody.innerHTML = ""; // Clear out template placeholder
+
+            // Constructing tabular structured mapping matrix exactly like your template view
+            const fieldsToPrint = [
+                { label: "Student Name", val: userData.studentName.toUpperCase() },
+                { label: "Father Name", val: userData.fatherName.toUpperCase() },
+                { label: "CNIC / B-Form", val: userData.cnic },
+                { label: "Contact No", val: userData.phone },
+                { label: "Applied Class", val: userData.appliedClass },
+                { label: "Test Center", val: "Main Hall, Block-A" }
+            ];
+
+            fieldsToPrint.forEach(item => {
+                const tr = document.createElement("tr");
+
+                const tdLabel = document.createElement("td");
+                tdLabel.className = "label-cell";
+                tdLabel.textContent = item.label;
+
+                const tdValue = document.createElement("td");
+                tdValue.className = "value-cell";
+                tdValue.textContent = item.val;
+
+                tr.appendChild(tdLabel);
+                tr.appendChild(tdValue);
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function executeRasterizationEngine() {
+            const captureTarget = document.getElementById("slip-capture-zone");
+
+            html2canvas(captureTarget, {
+                scale: 2.5, // Crisp high definition resolution scale matching layout
+                logging: false,
+                useCORS: true
+            }).then(canvas => {
+                const imageBase64Data = canvas.toDataURL("image/png");
+                
+                const downloadAnchor = document.createElement("a");
+                downloadAnchor.href = imageBase64Data;
+                downloadAnchor.download = `GAC_Official_Slip_${userData.studentName.replace(/\s+/g, '_').toUpperCase()}.png`;
+                
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                document.body.removeChild(downloadAnchor);
+            });
+        }
+    </script>
+</body>
+</html>
